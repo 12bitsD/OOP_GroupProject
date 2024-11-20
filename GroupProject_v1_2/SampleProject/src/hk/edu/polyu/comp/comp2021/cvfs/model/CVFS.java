@@ -37,6 +37,12 @@ public class CVFS {
     public Directory getCurrentDirectory() {
         return currentDirectory;
     }
+    public Disk getCurrentDisk() {return currentDisk;}
+    public Map<String,Criterion> getCri_set() {return cri_set;}
+    public Stack<command> getUndoStack() {return undoStack;}
+    public Stack<command> getRedoStack() {return redoStack;}
+
+
     public void deleteCriterion(String criName) {
         Criterion cri = cri_set.get(criName);
         if(cri!=null) {
@@ -101,7 +107,9 @@ public class CVFS {
 
     public void newDocument(String name, String type, String content) {
         if (currentDirectory != null) {
-            currentDirectory.addFile(new Document(name, type, content));
+            Document d = new Document(name, type, content);
+            currentDirectory.addFile(d);
+            currentDisk.setCurrentSize(currentDisk.getCurrentSize()+d.getSize());
         }
     }
 
@@ -109,6 +117,7 @@ public class CVFS {
     // Command: newDir dirName
     public void newDirectory(String name) {
         if (currentDirectory != null) {
+            currentDisk.setCurrentSize(currentDisk.getCurrentSize()+40);
             currentDirectory.addFile(new Directory(name));
         }
     }
@@ -117,7 +126,9 @@ public class CVFS {
     // Command: delete fileName
     public void deleteFile(String name) {
         if (currentDirectory != null) {
+            currentDisk.setCurrentSize(currentDisk.getCurrentSize()+currentDirectory.getFile(name).getSize());
             currentDirectory.deleteFile(name);
+
         }
     }
     // [REQ5]  rename File
@@ -180,7 +191,7 @@ public class CVFS {
         Criterion cri2 = cri_set.get(criName2);
         if (cri2 != null) {
             compositeCriterion compositeCri = new compositeCriterion(criName1, cri2, null, null, true);
-            cri_set.put(criName2,compositeCri);
+            cri_set.put(criName1,compositeCri);
         }
     }
     //newBinaryCri

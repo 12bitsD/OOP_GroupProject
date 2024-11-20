@@ -29,7 +29,7 @@ public class Criterion implements Serializable {
     }
     //检查是否是该类型的文件
     private boolean evluateType(File f){
-        if(op.equals("equal")&& isDocument(f)) return f.getType().contains(val);
+        if(op.equals("equals")&& isDocument(f)) return f.getType().contains(val);
         return false;
     }
 
