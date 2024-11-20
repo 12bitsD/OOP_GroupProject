@@ -46,7 +46,7 @@ public class CVFSTest {
     @Test
     public void testNewDirectory() {
         cvfs.newDisk(1024);
-        cvfs.newDirectory("dir1");
+        cvfs.NewDirectory("dir1");
         assertTrue(cvfs.getCurrentDirectory().getFiles().containsKey("dir1"));
         File dir = cvfs.getCurrentDirectory().getFiles().get("dir1");
         assertEquals("Directory", dir.getType());
@@ -56,15 +56,15 @@ public class CVFSTest {
     public void testDeleteFile() {
         cvfs.newDisk(1024);
         cvfs.newDocument("doc1", "txt", "Content");
-        cvfs.deleteFile("doc1");
+        cvfs.DeleteFile("doc1");
         assertFalse(cvfs.getCurrentDirectory().getFiles().containsKey("doc1"));
     }
 
     @Test
     public void testRenameFile() {
         cvfs.newDisk(1024);
-        cvfs.newDocument("doc1", "txt", "Content");
-        cvfs.renameFile("doc1", "doc2");
+        cvfs.NewDocument("doc1", "txt", "Content");
+        cvfs.RenameFile("doc1", "doc2");
         assertFalse(cvfs.getCurrentDirectory().getFiles().containsKey("doc1"));
         assertTrue(cvfs.getCurrentDirectory().getFiles().containsKey("doc2"));
     }
@@ -73,9 +73,9 @@ public class CVFSTest {
     public void testChangeDirectory() {
         cvfs.newDisk(1024);
         cvfs.newDirectory("dir1");
-        cvfs.changeDirectory("dir1");
+        cvfs.ChangeDirectory("dir1");
         assertEquals("dir1", cvfs.getCurrentDirectory().getName());
-        cvfs.changeDirectory("..");
+        cvfs.ChangeDirectory("..");
         assertEquals("root", cvfs.getCurrentDirectory().getName());
     }
 
@@ -128,7 +128,7 @@ public class CVFSTest {
     public void testNewCompositeCri() {
         cvfs.newDisk(1024);
         cvfs.NewSimpleCri("cri1", "type", "equals", "txt");
-        cvfs.newNegation("cri2", "cri1");
+        cvfs.NewNegation("cri2", "cri1");
         Criterion cri2 = cvfs.getCri_set().get("cri2");
         assertFalse(cri2.evaluate(new Document("doc1", "txt", "Content")));
 
@@ -144,10 +144,10 @@ public class CVFSTest {
     @Test
     public void testCompositeCriterionBinary2() {
         cvfs.newDisk(1024);
-        cvfs.newDocument("doc1", "txt", "Content");
-        cvfs.newDocument("doc2", "pdf", "Short");
-        cvfs.newDocument("doc3", "txt", "Short");
-        cvfs.newDocument("doc4", "pdf", "LongContent");
+        cvfs.NewDocument("doc1", "txt", "Content");
+        cvfs.NewDocument("doc2", "pdf", "Short");
+        cvfs.NewDocument("doc3", "txt", "Short");
+        cvfs.NewDocument("doc4", "pdf", "LongContent");
         cvfs.NewSimpleCri("cri1", "type", "equals", "txt");
         cvfs.NewSimpleCri("cri2", "size", ">=", "10");
         cvfs.newBinaryCri("cri3", "cri1", "&&", "cri2");
@@ -194,7 +194,7 @@ public class CVFSTest {
     @Test
     public void testSaveLoadDisk() throws IOException {
         cvfs.newDisk(1024);
-        cvfs.newDocument("doc1", "txt", "Content");
+        cvfs.NewDocument("doc1", "txt", "Content");
         String tempPath = "temp_disk.ser";
         cvfs.saveDisk(tempPath);
         CVFS cvfs2 = new CVFS();
