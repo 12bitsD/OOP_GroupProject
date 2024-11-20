@@ -2,6 +2,7 @@ package hk.edu.polyu.comp.comp2021.cvfs.model;
 import java.io.Serializable;
 
 public class Criterion implements Serializable {
+    private static final long SerialVersionUID = 1L;
     private String attrName;
     private String op;
     private String val;

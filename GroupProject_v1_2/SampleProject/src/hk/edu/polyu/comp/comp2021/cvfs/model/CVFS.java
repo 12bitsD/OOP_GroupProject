@@ -266,9 +266,14 @@ public class CVFS {
     // Command: load path
     public void loadDisk(String path) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
-            this.currentDisk = (Disk) ois.readObject();
-            this.currentDirectory = currentDisk.getRootDirectory();
+            Disk loadDisk = (Disk) ois.readObject();
+            this.currentDisk = loadDisk;
+            System.out.println("Disk loaded successfully.");
+
             this.cri_set = (Map<String, Criterion>) ois.readObject();
+            System.out.println("cri_set loaded successfully.");
+
+            this.currentDirectory = currentDisk.getRootDirectory();
             System.out.println("Disk loaded from " + path);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

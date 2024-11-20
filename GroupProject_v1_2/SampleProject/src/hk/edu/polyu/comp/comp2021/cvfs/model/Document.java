@@ -1,9 +1,9 @@
 package hk.edu.polyu.comp.comp2021.cvfs.model;
 
-import java.io.Serializable;
+
 
 //文件的类，可以获取内容，类型，文件大小
-public class Document extends File implements Serializable {
+public class Document extends File {
     private String content;
 
     public Document(String name, String type, String content) {

@@ -1,6 +1,9 @@
 package hk.edu.polyu.comp.comp2021.cvfs.model;
 
-public abstract class File {
+import java.io.Serializable;
+
+public abstract class File implements Serializable {
+    private static final long SerialVersionUID = 1L;
     private String name;
     private String type;
 
